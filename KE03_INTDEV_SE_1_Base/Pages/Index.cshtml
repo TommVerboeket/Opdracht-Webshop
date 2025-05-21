@@ -1,0 +1,75 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>Auto-onderdelen Webshop</h1>
+
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="product1" style="margin: 10px; display: inline-block;">
+            <div class="omschrijving1">
+                <p class="productnaam1">@product.Name</p>
+                <p>Prijs: € @product.Price</p>
+                <form method="post">
+                    <input type="hidden" name="productId" value="@product.Id" />
+                    <button type="submit" asp-page-handler="AddToCart" class="bestel-button">
+                        Voeg toe aan winkelmandje
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<h2>Winkelmandje</h2>
+@if (Model.Cart.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Aantal</th>
+                <th>Prijs</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Cart)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>€ @(item.Product.Price * item.Quantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p><strong>Totaal: € @Model.Cart.Sum(i => i.Product.Price * i.Quantity)</strong></p>
+}
+else
+{
+    <p>Je winkelmandje is leeg.</p>
+}
+
+<hr />
+
+<h2>Bestaande klanten</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Klant</th>
+            <th>Aantal Orders</th>
+        </tr>
+    </thead>
+    @foreach (var c in Model.Customers)
+    {
+        <tr>
+            <td>@c.Name</td>
+            <td>@c.Orders.Count</td>
+        </tr>
+    }
+</table>
