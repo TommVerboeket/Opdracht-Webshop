@@ -97,3 +97,64 @@ hr {
     border-top: 2px solid #ede9fe;
     margin: 40px 0 30px 0;
 }
+
+.navbar {
+    background: #fff;
+    color: #4b2995;
+    padding: 18px 0;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+    border-radius: 18px;
+    margin: 24px auto 32px auto;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+}
+
+.nav-brand {
+    font-size: 1.4rem;
+    color: #7c3aed;
+    text-decoration: none;
+    font-family: 'Californian FB', 'Segoe UI', Arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding-left: 6px;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+    .nav-list li {
+        display: inline;
+    }
+
+    .nav-list a {
+        color: #7c3aed;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 10px 22px;
+        border-radius: 12px;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        box-shadow: 0 1px 4px rgba(44, 62, 80, 0.04);
+    }
+
+        .nav-list a:hover {
+            background: #ede9fe;
+            color: #7c3aed;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+        }

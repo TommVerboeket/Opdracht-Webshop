@@ -82,5 +82,11 @@ namespace KE03_INTDEV_SE_1_Base.Pages
         {
             HttpContext.Session.Set("Cart", JsonSerializer.SerializeToUtf8Bytes(Cart));
         }
+
+        // Voeg deze statische methode toe zodat Klanten.cshtml.cs dezelfde data kan ophalen
+        public static IList<Customer> GetCustomersStatic(ICustomerRepository customerRepository)
+        {
+            return customerRepository.GetAllCustomers().ToList();
+        }
     }
 }

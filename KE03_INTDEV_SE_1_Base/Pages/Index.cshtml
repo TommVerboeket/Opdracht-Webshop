@@ -34,7 +34,7 @@
             <tr>
                 <th>Product</th>
                 <th>Aantal</th>
-                <th>prijs</th>
+                <th>Prijs</th>
             </tr>
         </thead>
         <tbody>
@@ -54,22 +54,3 @@ else
 {
     <p>Je winkelmandje is leeg.</p>
 }
-
-<hr />
-
-<h2>Bestaande klanten</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Klant</th>
-            <th>Aantal Orders</th>
-        </tr>
-    </thead>
-    @foreach (var c in Model.Customers)
-    {
-        <tr>
-            <td>@c.Name</td>
-            <td>@c.Orders.Count</td>
-        </tr>
-    }
-</table>

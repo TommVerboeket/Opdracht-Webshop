@@ -1,0 +1,25 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.KlantenModel
+@{
+    ViewData["Title"] = "Bestaande klanten";
+}
+
+<h1>Bestaande klanten</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Orders</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var klant in Model.Customers)
+        {
+            <tr>
+                <td>@klant.Name</td>
+                <td>@klant.Orders.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
