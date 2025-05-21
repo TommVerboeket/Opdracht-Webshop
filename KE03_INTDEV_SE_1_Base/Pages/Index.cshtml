@@ -6,25 +6,6 @@
 
 <h1>Auto-onderdelen Webshop</h1>
 
-<div class="row">
-    @foreach (var product in Model.Products)
-    {
-        <div class="product1" style="margin: 10px; display: inline-block;">
-            <div class="omschrijving1">
-                <p class="productnaam1">@product.Name</p>
-                <p>Prijs: € @product.Price</p>
-                <form method="post">
-                    <input type="hidden" name="productId" value="@product.Id" />
-                    <button type="submit" asp-page-handler="AddToCart" class="bestel-button">
-                        Voeg toe aan winkelmandje
-                    </button>
-                </form>
-            </div>
-        </div>
-    }
-</div>
-
-<hr />
 
 <h2>Winkelmandje</h2>
 @if (Model.Cart.Any())

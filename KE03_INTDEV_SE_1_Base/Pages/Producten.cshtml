@@ -1,0 +1,45 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.ProductenModel
+@{
+    ViewData["Title"] = "Producten";
+}
+
+<h1>Producten</h1>
+
+@if (Model.ShowAddedMessage)
+{
+    <div id="added-message" style="background: #d1fae5; color: #065f46; border-radius: 10px; padding: 12px 24px; margin: 0 auto 24px auto; max-width: 400px; text-align: center; font-weight: 600; box-shadow: 0 2px 8px rgba(44,62,80,0.08);">
+        Product toegevoegd aan winkelmandje!
+    </div>
+    <script>
+        setTimeout(function() {
+            var msg = document.getElementById('added-message');
+            if(msg) msg.style.display = 'none';
+        }, 2000);
+    </script>
+}
+
+<form method="get" class="filter-form" style="margin-bottom: 24px; text-align: center;">
+    <input type="text" name="search" value="@Model.Search" placeholder="Zoek op naam of categorie..." class="filter-input" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #ede9fe; width: 260px;" />
+    <button type="submit" class="bestel-button" style="width: auto; height: auto; padding: 8px 24px; margin-top: 0; margin-left: 8px;">Filter</button>
+</form>
+
+<div class="row">
+    @foreach (var product in Model.FilteredProducts)
+    {
+        <div class="product1">
+            <img src="@product.ImageUrl" alt="@product.Name" style="width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 12px;" />
+            <div class="omschrijving1">
+                <p class="productnaam1">@product.Name</p>
+                <p style="margin-bottom: 8px;">@product.Description</p>
+                <p>Prijs: € @product.Price</p>
+                <form method="post">
+                    <input type="hidden" name="productId" value="@product.Id" />
+                    <button type="submit" asp-page-handler="AddToCart" class="bestel-button">
+                        Voeg toe aan winkelmandje
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
