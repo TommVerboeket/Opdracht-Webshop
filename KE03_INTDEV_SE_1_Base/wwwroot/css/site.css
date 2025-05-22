@@ -100,7 +100,7 @@ hr {
 
 .navbar {
     background: #fff;
-    color: #4b2995;
+    color: #7c3aed;
     padding: 18px 0;
     box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
     border-radius: 18px;
@@ -119,20 +119,11 @@ hr {
     padding: 0 18px;
 }
 
-.nav-brand {
-    font-size: 1.4rem;
-    color: #7c3aed;
-    text-decoration: none;
-    font-family: 'Californian FB', 'Segoe UI', Arial, sans-serif;
-    font-weight: bold;
-    letter-spacing: 1px;
-    padding-left: 6px;
-}
 
 .nav-list {
     list-style: none;
     display: flex;
-    gap: 24px;
+    gap: 18px;
     margin: 0;
     padding: 0;
 }
@@ -142,19 +133,99 @@ hr {
     }
 
     .nav-list a {
-        color: #7c3aed;
+        display: inline-block;
+        background: #7c3aed;
+        color: #fff !important;
         text-decoration: none;
         font-size: 1rem;
         font-weight: 600;
-        padding: 10px 22px;
+        padding: 10px 26px;
         border-radius: 12px;
         transition: background 0.2s, color 0.2s, box-shadow 0.2s;
         font-family: 'Segoe UI', Arial, sans-serif;
-        box-shadow: 0 1px 4px rgba(44, 62, 80, 0.04);
+        box-shadow: 0 1px 4px rgba(44, 62, 80, 0.08);
+        border: none;
+        outline: none;
+        cursor: pointer;
     }
 
-        .nav-list a:hover {
-            background: #ede9fe;
-            color: #7c3aed;
-            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+        .nav-list a:hover,
+        .nav-list a:focus {
+            background: #5b21b6;
+            color: #fff !important;
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
+            text-decoration: none;
         }
+.nav-brand {
+    font-size: 1.4rem;
+    color: #7c3aed !important;
+    text-decoration: none;
+    font-family: 'Californian FB', 'Segoe UI', Arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding-left: 6px;
+    transition: color 0.2s;
+}
+
+    .nav-brand:hover,
+    .nav-brand:focus {
+        color: #7c3aed !important;
+        text-decoration: none;
+    }
+
+.tafel {
+    width: 90%;
+    margin: 0 auto 30px auto;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 8px rgba(44, 62, 80, 0.06);
+}
+
+    .tafel th, .tafel td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    .tafel th {
+        background: #ede9fe;
+        color: #4b2995;
+        font-weight: 700;
+    }
+
+    .tafel tr:last-child td {
+        border-bottom: none;
+    }
+
+.kleineknop {
+    background: #ede9fe;
+    color: #7c3aed;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 2px;
+    transition: background 0.2s;
+}
+
+    .kleineknop:hover {
+        background: #d1c4e9;
+    }
+
+    .kleineknop.rood {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+.melding {
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 10px;
+    padding: 12px 24px;
+    margin: 0 auto 24px auto;
+    max-width: 400px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+}

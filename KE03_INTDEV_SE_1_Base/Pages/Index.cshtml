@@ -7,31 +7,3 @@
 <h1>Auto-onderdelen Webshop</h1>
 
 
-<h2>Winkelmandje</h2>
-@if (Model.Cart.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Aantal</th>
-                <th>Prijs</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Cart)
-            {
-                <tr>
-                    <td>@item.Product.Name</td>
-                    <td>@item.Quantity</td>
-                    <td>€ @(item.Product.Price * item.Quantity)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <p><strong>Totaal: € @Model.Cart.Sum(i => i.Product.Price * i.Quantity)</strong></p>
-}
-else
-{
-    <p>Je winkelmandje is leeg.</p>
-}

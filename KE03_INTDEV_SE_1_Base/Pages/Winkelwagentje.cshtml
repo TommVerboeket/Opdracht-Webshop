@@ -1,0 +1,57 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.WinkelwagentjeModel
+@{
+    ViewData["Title"] = "Winkelwagentje";
+}
+
+<h1>Winkelwagentje</h1>
+
+@if (!string.IsNullOrEmpty(Model.Melding))
+{
+    <div class="melding">@Model.Melding</div>
+}
+
+@if (Model.Winkelwagen.Any())
+{
+    <table class="tafel">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Aantal</th>
+                <th>Prijs</th>
+                <th>Actie</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Winkelwagen)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                            <button type="submit" name="actie" value="minder" class="kleineknop">-</button>
+                            <span style="margin:0 8px;">@item.Aantal</span>
+                            <button type="submit" name="actie" value="meer" class="kleineknop">+</button>
+                        </form>
+                    </td>
+                    <td>€ @(item.Product.Price * item.Aantal)</td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                            <button type="submit" name="actie" value="verwijder" class="kleineknop rood">Verwijder</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p><strong>Totaal: € @Model.Winkelwagen.Sum(i => i.Product.Price * i.Aantal)</strong></p>
+    <form method="post">
+        <button type="submit" name="actie" value="bestel" class="bestel-button" style="width:auto;">Bestellen</button>
+    </form>
+}
+else
+{
+    <p>Je winkelwagentje is leeg.</p>
+}

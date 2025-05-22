@@ -1,0 +1,23 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.BestellenModel
+@{
+    ViewData["Title"] = "Bestellen";
+}
+
+<h1>Bestellen</h1>
+
+@if (!string.IsNullOrEmpty(Model.Melding))
+{
+    <div class="melding">@Model.Melding</div>
+}
+
+@if (Model.Besteld)
+{
+    <p>Je bestelling is succesvol geplaatst!</p>
+}
+else
+{
+    <form method="post">
+        <button type="submit" class="bestel-button" style="width:auto;">Plaats bestelling</button>
+    </form>
+}
