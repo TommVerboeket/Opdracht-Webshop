@@ -229,3 +229,67 @@ hr {
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(44,62,80,0.08);
 }
+
+.welkom-blok {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(44,62,80,0.08);
+    max-width: 600px;
+    margin: 40px auto 32px auto;
+    padding: 36px 32px 28px 32px;
+    text-align: center;
+}
+
+.welkom-titel {
+    color: #7c3aed;
+    margin-bottom: 16px;
+}
+
+.welkom-tekst {
+    color: #2d2d2d;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+}
+
+.welkom-links {
+    margin-top: 12px;
+    text-decoration: none;
+}
+
+.info-blokken {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.info-blok {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(44,62,80,0.08);
+    padding: 24px 32px;
+    min-width: 260px;
+    max-width: 320px;
+    margin-bottom: 24px;
+}
+
+    .info-blok h2 {
+        color: #7c3aed;
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .info-blok ul {
+        padding-left: 18px;
+        color: #2d2d2d;
+        font-size: 1rem;
+    }
+
+.welkom-links .bestel-button,
+.welkom-links a.bestel-button {
+    height: 60px;
+    min-width: 220px;
+    font-size: 1.15rem;
+    padding: 0 36px;
+}
