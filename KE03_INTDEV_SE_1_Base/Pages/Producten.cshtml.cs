@@ -63,7 +63,7 @@ namespace KE03_INTDEV_SE_1_Base.Pages
                     Cart.Add(new CartItem { Product = product, Quantity = 1 });
             }
             SaveCart();
-            // Toon melding na toevoegen
+           
             return RedirectToPage(new { search = Search, added = true });
         }
 

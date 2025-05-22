@@ -1,0 +1,50 @@
+﻿@page
+@model KE03_INTDEV_SE_1_Base.Pages.BestelgeschiedenisModel
+@{
+    ViewData["Title"] = "Bestelgeschiedenis";
+}
+
+<h1>Bestelgeschiedenis</h1>
+
+@if (Model.Bestellingen.Any())
+{
+    <div class="geschiedenis-lijst">
+        @foreach (var bestelling in Model.Bestellingen)
+        {
+            <div class="geschiedenis-blok">
+                <div class="geschiedenis-kop">
+                    <span><strong>Naam:</strong> @bestelling.Customer.Name</span>
+                    <span><strong>Adres:</strong> @bestelling.Customer.Address</span>
+                    <span><strong>Datum:</strong> @bestelling.OrderDate.ToString("dd-MM-yyyy HH:mm")</span>
+                </div>
+                <table class="tafel">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Prijs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in bestelling.Products.GroupBy(p => p.Id))
+                        {
+                            <tr>
+                                <td>@item.First().Name (@item.Count()x)</td>
+                                <td>€ @(item.First().Price * item.Count())</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="geschiedenis-totaal">
+                    <strong>
+                        Totaal: €
+                        @bestelling.Products.Sum(p => p.Price)
+                    </strong>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Er zijn nog geen bestellingen geplaatst.</p>
+}
