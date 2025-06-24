@@ -4,27 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using DataAccessLayer.Models;
 
 namespace KE03_INTDEV_SE_1_Base.Pages
 {
     public class WinkelwagentjeModel : PageModel
     {
-        public class Product
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public decimal Price { get; set; }
-        }
-
-        public class WinkelwagenItem
+        public class CartItem
         {
             public Product Product { get; set; }
-            public int Aantal { get; set; }
+            public int Quantity { get; set; }
         }
 
-        public static List<List<WinkelwagenItem>> Bestellingen = new();
+        public static List<List<CartItem>> Bestellingen = new();
 
-        public List<WinkelwagenItem> Winkelwagen { get; set; } = new();
+        public List<CartItem> Cart { get; set; } = new();
         [BindProperty]
         public int ProductId { get; set; }
         [BindProperty]
@@ -33,41 +27,41 @@ namespace KE03_INTDEV_SE_1_Base.Pages
 
         public void OnGet()
         {
-            LaadWinkelwagen();
+            LoadCart();
         }
 
         public IActionResult OnPost()
         {
-            LaadWinkelwagen();
+            LoadCart();
             if (Actie == "meer")
             {
-                var item = Winkelwagen.FirstOrDefault(i => i.Product.Id == ProductId);
-                if (item != null) item.Aantal++;
+                var item = Cart.FirstOrDefault(i => i.Product.Id == ProductId);
+                if (item != null) item.Quantity++;
                 Melding = "Aantal verhoogd.";
             }
             else if (Actie == "minder")
             {
-                var item = Winkelwagen.FirstOrDefault(i => i.Product.Id == ProductId);
-                if (item != null && item.Aantal > 1) item.Aantal--;
-                else if (item != null) Winkelwagen.Remove(item);
+                var item = Cart.FirstOrDefault(i => i.Product.Id == ProductId);
+                if (item != null && item.Quantity > 1) item.Quantity--;
+                else if (item != null) Cart.Remove(item);
                 Melding = "Aantal verlaagd.";
             }
             else if (Actie == "verwijder")
             {
-                var item = Winkelwagen.FirstOrDefault(i => i.Product.Id == ProductId);
-                if (item != null) Winkelwagen.Remove(item);
+                var item = Cart.FirstOrDefault(i => i.Product.Id == ProductId);
+                if (item != null) Cart.Remove(item);
                 Melding = "Product verwijderd.";
             }
             else if (Actie == "bestel")
             {
-                if (Winkelwagen.Any())
+                if (Cart.Any())
                 {
-                    Bestellingen.Add(Winkelwagen.Select(i => new WinkelwagenItem
+                    Bestellingen.Add(Cart.Select(i => new CartItem
                     {
                         Product = i.Product,
-                        Aantal = i.Aantal
+                        Quantity = i.Quantity
                     }).ToList());
-                    Winkelwagen.Clear();
+                    Cart.Clear();
                     Melding = "Bestelling geplaatst!";
                 }
                 else
@@ -75,7 +69,7 @@ namespace KE03_INTDEV_SE_1_Base.Pages
                     Melding = "Winkelwagentje is leeg.";
                 }
             }
-            SlaWinkelwagenOp();
+            SaveCart();
             return RedirectToPage(new { melding = Melding });
         }
 
@@ -88,17 +82,25 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             }
         }
 
-        private void LaadWinkelwagen()
+        private void LoadCart()
         {
             if (HttpContext.Session.TryGetValue("Cart", out var bytes))
             {
-                Winkelwagen = JsonSerializer.Deserialize<List<WinkelwagenItem>>(bytes) ?? new();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                Cart = JsonSerializer.Deserialize<List<CartItem>>(bytes, options) ?? new();
+            }
+            else
+            {
+                Cart = new List<CartItem>();
             }
         }
 
-        private void SlaWinkelwagenOp()
+        private void SaveCart()
         {
-            HttpContext.Session.Set("Cart", JsonSerializer.SerializeToUtf8Bytes(Winkelwagen));
+            HttpContext.Session.Set("Cart", JsonSerializer.SerializeToUtf8Bytes(Cart));
         }
     }
 }

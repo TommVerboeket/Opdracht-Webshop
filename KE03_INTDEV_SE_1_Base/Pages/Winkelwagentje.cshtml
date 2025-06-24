@@ -8,47 +8,50 @@
 
 @if (!string.IsNullOrEmpty(Model.Melding))
 {
-    <div class="melding">@Model.Melding</div>
+    <div style="background: #d1fae5; color: #065f46; border-radius: 10px; padding: 12px 24px; margin: 0 auto 24px auto; max-width: 400px; text-align: center; font-weight: 600; box-shadow: 0 2px 8px rgba(44,62,80,0.08);">
+        @Model.Melding
+    </div>
 }
 
-@if (Model.Winkelwagen.Any())
+@if (Model.Cart.Any())
 {
-    <table class="tafel">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Aantal</th>
-                <th>Prijs</th>
-                <th>Actie</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Winkelwagen)
-            {
-                <tr>
-                    <td>@item.Product.Name</td>
-                    <td>
-                        <form method="post" style="display:inline;">
-                            <input type="hidden" name="productId" value="@item.Product.Id" />
-                            <button type="submit" name="actie" value="minder" class="kleineknop">-</button>
-                            <span style="margin:0 8px;">@item.Aantal</span>
-                            <button type="submit" name="actie" value="meer" class="kleineknop">+</button>
-                        </form>
-                    </td>
-                    <td>€ @(item.Product.Price * item.Aantal)</td>
-                    <td>
-                        <form method="post" style="display:inline;">
-                            <input type="hidden" name="productId" value="@item.Product.Id" />
-                            <button type="submit" name="actie" value="verwijder" class="kleineknop rood">Verwijder</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <p><strong>Totaal: € @Model.Winkelwagen.Sum(i => i.Product.Price * i.Aantal)</strong></p>
     <form method="post">
-        <button type="submit" name="actie" value="bestel" class="bestel-button" style="width:auto;">Bestellen</button>
+        <table style="width:100%; margin-bottom: 24px;">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Aantal</th>
+                    <th>Prijs per stuk</th>
+                    <th>Totaal</th>
+                    <th>Actie</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Cart)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="ProductId" value="@item.Product.Id" />
+                                <button type="submit" name="Actie" value="minder" class="kleineknop">-</button>
+                                <span style="margin:0 8px;">@item.Quantity</span>
+                                <button type="submit" name="Actie" value="meer" class="kleineknop">+</button>
+                            </form>
+                        </td>
+                        <td>€ @item.Product.Price</td>
+                        <td>€ @(item.Product.Price * item.Quantity)</td>
+                        <td>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="ProductId" value="@item.Product.Id" />
+                                <button type="submit" name="Actie" value="verwijder" class="kleineknop rood">Verwijder</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" name="Actie" value="bestel" class="bestel-button">Bestellen</button>
     </form>
 }
 else

@@ -29,20 +29,18 @@ namespace DataAccessLayer
             };
             context.Customers.AddRange(customers);
 
-            var orders = new Order[]
-            {
-                new Order { Customer = customers[0], OrderDate = DateTime.Parse("2021-01-01")},
-                new Order { Customer = customers[0], OrderDate = DateTime.Parse("2021-02-01")},
-                new Order { Customer = customers[1], OrderDate = DateTime.Parse("2021-02-01")},
-                new Order { Customer = customers[2], OrderDate = DateTime.Parse("2021-03-01")}
-            };  
-            context.Orders.AddRange(orders);
+           
 
             var products = new Product[]
             {
-                new Product { Name = "Nebuchadnezzar", Description = "Het schip waarop Neo voor het eerst de echte wereld leert kennen", Price = 10000.00m },
-                new Product { Name = "Jack-in Chair", Description = "Stoel met een rugsteun en metalen armen waarin mensen zitten om ingeplugd te worden in de Matrix via een kabel in de nekpoort", Price = 500.50m },
-                new Product { Name = "EMP (Electro-Magnetic Pulse) Device", Description = "Wapentuig op de schepen van Zion", Price = 129.99m }
+                new Product { Id = 1, Name = "Remschijven", Description = "Hoogwaardige remschijven voor optimale veiligheid.", Price = 49.95m, ImageUrl = "/images/remschijf.jpg", Category = "Remmen" },
+                new Product { Id = 2, Name = "Olie filter", Description = "Betrouwbare oliefilter voor een lange levensduur van je motor.", Price = 12.50m, ImageUrl = "/images/oliefilter.jpg", Category = "Motor" },
+                new Product { Id = 3, Name = "Bougieset", Description = "Complete set bougies voor een soepele ontsteking.", Price = 29.99m, ImageUrl = "/images/bougieset.jpg", Category = "Motor" },
+                new Product { Id = 4, Name = "Ruitenwisser", Description = "Heldere ruiten met deze duurzame ruitenwissers.", Price = 15.00m, ImageUrl = "/images/ruitenwisser.jpg", Category = "Exterieur" },
+                new Product { Id = 5, Name = "Accu", Description = "Krachtige accu voor betrouwbare starts.", Price = 89.00m, ImageUrl = "/images/accu.jpg", Category = "Elektrisch" },
+                new Product { Id = 6, Name = "Koplamp", Description = "Heldere koplamp voor maximale zichtbaarheid.", Price = 39.95m, ImageUrl = "/images/koplamp.jpg", Category = "Verlichting" },
+                new Product { Id = 7, Name = "Luchtfilter", Description = "Efficiënte luchtfilter voor optimale motorprestaties.", Price = 17.50m, ImageUrl = "/images/luchtfilter.jpg", Category = "Motor" },
+                new Product { Id = 8, Name = "Banden", Description = "All-season banden voor veilig rijgedrag.", Price = 75.00m, ImageUrl = "/images/band.jpg", Category = "Wielen" }
             };
             context.Products.AddRange(products);
 
@@ -54,6 +52,15 @@ namespace DataAccessLayer
                 new Part { Name = "Koelvloeistofpomp", Description = "Koeling van de motor of elektronische systemen."}
             };
             context.Parts.AddRange(parts);
+
+            var orders = new Order[]
+           {
+                new Order { Customer = customers[0], OrderDate = DateTime.Parse("2021-01-01"), Products = new List<Product>{products[1] }},
+                new Order { Customer = customers[0], OrderDate = DateTime.Parse("2021-02-01"), Products = new List<Product>{products[2] }},
+                new Order { Customer = customers[1], OrderDate = DateTime.Parse("2021-02-01"), Products = new List<Product>{products[3] }},
+                new Order { Customer = customers[2], OrderDate = DateTime.Parse("2021-03-01"), Products = new List<Product>{products[4], products[2] }}
+           };
+            context.Orders.AddRange(orders);
 
             context.SaveChanges();
 
