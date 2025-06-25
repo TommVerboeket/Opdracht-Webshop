@@ -8,43 +8,26 @@
 
 @if (Model.Bestellingen.Any())
 {
-    <div class="geschiedenis-lijst">
-        @foreach (var bestelling in Model.Bestellingen)
+    <ul>
+        @foreach (var order in Model.Bestellingen)
         {
-            <div class="geschiedenis-blok">
-                <div class="geschiedenis-kop">
-                    <span><strong>Naam:</strong> @bestelling.Customer.Name</span>
-                    <span><strong>Adres:</strong> @bestelling.Customer.Address</span>
-                    <span><strong>Datum:</strong> @bestelling.OrderDate.ToString("dd-MM-yyyy HH:mm")</span>
-                </div>
-                <table class="tafel">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Prijs</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in bestelling.Products.GroupBy(p => p.Id))
-                        {
-                            <tr>
-                                <td>@item.First().Name (@item.Count()x)</td>
-                                <td>€ @(item.First().Price * item.Count())</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div class="geschiedenis-totaal">
-                    <strong>
-                        Totaal: €
-                        @bestelling.Products.Sum(p => p.Price)
-                    </strong>
-                </div>
-            </div>
+            <li style="margin-bottom: 24px;">
+                <strong>@order.OrderDate.ToString("g")</strong>
+                <br />
+                Klant: @order.CustomerName, @order.CustomerAddress
+                <ul>
+                    @foreach (var product in order.Products)
+                    {
+                        <li>
+                            @product.Name (@product.Quantity) - € @(product.Price * product.Quantity)
+                        </li>
+                    }
+                </ul>
+            </li>
         }
-    </div>
+    </ul>
 }
 else
 {
-    <p>Er zijn nog geen bestellingen geplaatst.</p>
+    <p>Geen bestellingen gevonden.</p>
 }

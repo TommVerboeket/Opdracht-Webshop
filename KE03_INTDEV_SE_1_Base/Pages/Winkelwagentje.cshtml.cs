@@ -37,14 +37,12 @@ namespace KE03_INTDEV_SE_1_Base.Pages
             {
                 var item = Cart.FirstOrDefault(i => i.Product.Id == ProductId);
                 if (item != null) item.Quantity++;
-                Melding = "Aantal verhoogd.";
             }
             else if (Actie == "minder")
             {
                 var item = Cart.FirstOrDefault(i => i.Product.Id == ProductId);
                 if (item != null && item.Quantity > 1) item.Quantity--;
                 else if (item != null) Cart.Remove(item);
-                Melding = "Aantal verlaagd.";
             }
             else if (Actie == "verwijder")
             {

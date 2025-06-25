@@ -15,43 +15,45 @@
 
 @if (Model.Cart.Any())
 {
-    <form method="post">
-        <table style="width:100%; margin-bottom: 24px;">
-            <thead>
+    <table style="width:100%; margin-bottom: 24px;">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Aantal</th>
+                <th>Prijs per stuk</th>
+                <th>Totaal</th>
+                <th>Actie</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Cart)
+            {
                 <tr>
-                    <th>Product</th>
-                    <th>Aantal</th>
-                    <th>Prijs per stuk</th>
-                    <th>Totaal</th>
-                    <th>Actie</th>
+                    <td>@item.Product.Name</td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="ProductId" value="@item.Product.Id" />
+                            <button type="submit" name="Actie" value="minder" class="kleineknop">-</button>
+                            <span style="margin:0 8px;">@item.Quantity</span>
+                            <button type="submit" name="Actie" value="meer" class="kleineknop">+</button>
+                        </form>
+                    </td>
+                    <td>€ @item.Product.Price</td>
+                    <td>€ @(item.Product.Price * item.Quantity)</td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="ProductId" value="@item.Product.Id" />
+                            <button type="submit" name="Actie" value="verwijder" class="kleineknop rood">Verwijder</button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Cart)
-                {
-                    <tr>
-                        <td>@item.Product.Name</td>
-                        <td>
-                            <form method="post" style="display:inline;">
-                                <input type="hidden" name="ProductId" value="@item.Product.Id" />
-                                <button type="submit" name="Actie" value="minder" class="kleineknop">-</button>
-                                <span style="margin:0 8px;">@item.Quantity</span>
-                                <button type="submit" name="Actie" value="meer" class="kleineknop">+</button>
-                            </form>
-                        </td>
-                        <td>€ @item.Product.Price</td>
-                        <td>€ @(item.Product.Price * item.Quantity)</td>
-                        <td>
-                            <form method="post" style="display:inline;">
-                                <input type="hidden" name="ProductId" value="@item.Product.Id" />
-                                <button type="submit" name="Actie" value="verwijder" class="kleineknop rood">Verwijder</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <button type="submit" name="Actie" value="bestel" class="bestel-button">Bestellen</button>
+            }
+        </tbody>
+    </table>
+
+    <!-- Bestellen gaat nu via de Bestellen-pagina -->
+    <form method="get" asp-page="/Bestellen" style="text-align:right;">
+        <button type="submit" class="bestel-button">Bestellen</button>
     </form>
 }
 else

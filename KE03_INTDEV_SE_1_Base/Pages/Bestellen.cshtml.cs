@@ -30,69 +30,57 @@ namespace KE03_INTDEV_SE_1_Base.Pages
         public void OnPost()
         {
             Besteld = false;
-          
-            var klantJson = HttpContext.Session.GetString("KlantGegevens");
+
+            // Haal winkelwagen uit sessie
             var winkelwagenJson = HttpContext.Session.Get("Cart");
-            if (klantJson != null && winkelwagenJson != null)
+            var winkelwagen = winkelwagenJson != null
+                ? JsonSerializer.Deserialize<List<CartItem>>(winkelwagenJson)
+                : null;
+
+            if (winkelwagen != null && winkelwagen.Any())
             {
-                var klant = JsonSerializer.Deserialize<KlantGegevens>(klantJson);
-                var winkelwagen = JsonSerializer.Deserialize<List<CartItem>>(winkelwagenJson);
-
-                if (klant != null && winkelwagen != null && winkelwagen.Any())
+                // Dummy klant (of haal uit sessie als je klantgegevens hebt)
+                var klantNaam = "Gast";
+                var klantAdres = "Onbekend";
+                var klant = _db.Customers.FirstOrDefault(c => c.Name == klantNaam && c.Address == klantAdres);
+                if (klant == null)
                 {
-                    
-                    var customer = _db.Customers.FirstOrDefault(c => c.Name == klant.Naam && c.Address == klant.Adres);
-                    if (customer == null)
-                    {
-                        customer = new Customer { Name = klant.Naam, Address = klant.Adres, Active = true };
-                        _db.Customers.Add(customer);
-                        _db.SaveChanges();
-                    }
+                    klant = new Customer { Name = klantNaam, Address = klantAdres, Active = true };
+                    _db.Customers.Add(klant);
+                    _db.SaveChanges();
+                }
 
-        
-                    var order = new Order
-                    {
-                        OrderDate = DateTime.Now,
-                        CustomerId = customer.Id,
-                        Customer = customer
-                    };
+                var order = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    CustomerId = klant.Id,
+                    Customer = klant,
+                    Products = new List<Product>()
+                };
 
-                   
-                    foreach (var item in winkelwagen)
+                foreach (var item in winkelwagen)
+                {
+                    var product = _db.Products.FirstOrDefault(p => p.Id == item.Product.Id);
+                    if (product != null)
                     {
-                        var product = _db.Products.FirstOrDefault(p => p.Id == item.Product.Id);
-                        if (product != null)
+                        for (int i = 0; i < item.Quantity; i++)
                         {
-                            for (int i = 0; i < item.Quantity; i++)
-                            {
-                                order.Products.Add(product);
-                            }
+                            order.Products.Add(product);
                         }
                     }
-
-                    _db.Orders.Add(order);
-                    _db.SaveChanges();
-
-                    HttpContext.Session.Remove("Cart");
-                    Besteld = true;
-                    Melding = "Bestelling afgerond!";
                 }
-                else
-                {
-                    Melding = "Bestelling niet gelukt.";
-                }
+
+                _db.Orders.Add(order);
+                _db.SaveChanges();
+
+                HttpContext.Session.Remove("Cart");
+                Besteld = true;
+                Melding = "Bestelling afgerond!";
             }
             else
             {
-                Melding = "Bestelling niet gelukt.";
+                Melding = "Bestelling niet gelukt. Winkelwagen is leeg.";
             }
-        }
-
-        public class KlantGegevens
-        {
-            public string Naam { get; set; }
-            public string Adres { get; set; }
-            public string Betaalmethode { get; set; }
         }
 
         public class CartItem
